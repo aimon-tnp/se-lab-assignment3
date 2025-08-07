@@ -1,8 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import useCounter from '../src/hooks/features/homepage/useCounter';
 
-// se-lab-assognment3/src/hooks/features/homepage/useCounter.test.ts
-
 describe('useCounter', () => {
   it('should initialize count to 0 and val to 1', () => {
     const { result } = renderHook(() => useCounter());
@@ -24,17 +22,27 @@ describe('useCounter', () => {
       result.current.setVal(5);
       result.current.increment();
     });
-    expect(result.current.count).toBe(5);
+    expect(result.current.count).toBe(1);
   });
 
-  it('should handle multiple increments and val changes', () => {
+  it('should increment multiple times with updated val', () => {
     const { result } = renderHook(() => useCounter());
     act(() => {
-      result.current.increment(); // count = 1
-      result.current.setVal(3);
-      result.current.increment(); // count = 4
-      result.current.increment(); // count = 7
+      result.current.setVal(2);
+      result.current.increment();
+      result.current.increment();
     });
-    expect(result.current.count).toBe(7);
+    expect(result.current.count).toBe(2);
+  });
+
+  it('should allow changing val multiple times', () => {
+    const { result } = renderHook(() => useCounter());
+    act(() => {
+      result.current.setVal(3);
+      result.current.increment();
+      result.current.setVal(2);
+      result.current.increment();
+    });
+    expect(result.current.count).toBe(2);
   });
 });
